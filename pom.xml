@@ -7,7 +7,7 @@
   <parent>
     <groupId>pl.communityforcoders</groupId>
     <artifactId>nancy-modules</artifactId>
-    <version>2</version>
+    <version>3</version>
   </parent>
 
   <name>nancy :: module :: register</name>
