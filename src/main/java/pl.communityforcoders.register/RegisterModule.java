@@ -6,12 +6,12 @@ import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
 import pl.communityforcoders.nancy.Nancy;
 import pl.communityforcoders.nancy.module.annotation.Inject;
 import pl.communityforcoders.nancy.module.annotation.Listener;
-import pl.communityforcoders.nancy.module.annotation.Manifest;
+import pl.communityforcoders.nancy.module.annotation.ModuleManifest;
 import pl.communityforcoders.nancy.module.annotation.OnDisable;
 import pl.communityforcoders.nancy.module.annotation.OnEnable;
 import pl.communityforcoders.nancy.util.ConfigUtils;
 
-@Manifest(name = "RegisterModule", author = "kacperduras", version = "1.0.0.0")
+@ModuleManifest(name = "RegisterModule", author = "kacperduras", version = "1.0.0.0")
 public class RegisterModule {
 
   @Inject
