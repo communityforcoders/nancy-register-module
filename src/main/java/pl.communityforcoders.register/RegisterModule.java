@@ -1,6 +1,7 @@
 package pl.communityforcoders.register;
 
 import java.util.List;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed.Field;
@@ -54,7 +55,7 @@ public class RegisterModule {
     });
   }
 
-  @CommandManifest(name = "!reg")
+  @CommandManifest(name = "!reg", type = ChannelType.PRIVATE)
   public void registerCommand(User user, PrivateChannel channel, CommandContext context) {
     if (context.getParams().size() != 1) {
       channel.sendMessage(EmbedUtils.error(new Field("Poprawne użycie", "!reg <male/female/unspecified>", true))).queue();
