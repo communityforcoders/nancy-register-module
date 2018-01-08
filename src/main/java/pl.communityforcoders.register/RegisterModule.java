@@ -27,15 +27,20 @@ public class RegisterModule {
 
   private Guild guild;
 
+  private RegisterThread thread;
+
   @OnEnable
   public void onEnable() {
     guild = nancy.getJDA().getGuildById("396018831434186762");
+    thread = new RegisterThread(nancy, guild);
 
     nancy.getCommandManager().register(this);
+    thread.start();
   }
 
   @OnDisable
   public void onDisable() {
+    thread.interrupt();
   }
 
   @Listener
@@ -47,8 +52,8 @@ public class RegisterModule {
           .append(":thought_balloon:           Masz jakieś pytania lub problem? Śmiało zgłoś się do kogoś z **ekipy**\n")
           .append(":thought_balloon:           Masz problem dotyczący programowania? Nasza społeczność to idealne miejsce żeby poprosić o pomoc. Zapytaj tylko na odpowiednim kanale, odpowiedź przyjdzie sama.\n")
           .append(":thought_balloon:           Propozycje? To nie problem. Jesteśmy jak najbardziej **otwarci**, również drogą prywatną.\n")
-          .append(":thought_balloon:           Jedna z wazniejszych rzeczy - regulamin, znajduję się na kanale **#rules**.\n")
-          .append(":thought_balloon:           Wszystkie wazne ogłoszenia znajdziesz na **#advertisements**.\n")
+          .append(":thought_balloon:           Jedna z ważniejszych rzeczy - regulamin, znajduję się na kanale **#rules**.\n")
+          .append(":thought_balloon:           Wszystkie ważne ogłoszenia znajdziesz na **#announcements**.\n")
           .append("\n")
           .append("Nasza strona, bot - wszystko jest *open source*. I to **TY** możesz przyczynić się do jego ewolucji, a nawet nie tylko.\n").queue();
       channel.sendMessage("Skoro się tutaj znalazłeś, została Ci tylko część weryfikacyjna. Tutaj możesz podać swoją płeć, poprzez wpisanie komendy `!reg <male/female/unspecified>`.").queue();
