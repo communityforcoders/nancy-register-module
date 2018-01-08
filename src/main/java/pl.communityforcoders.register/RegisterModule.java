@@ -19,7 +19,7 @@ import pl.communityforcoders.nancy.module.annotation.OnDisable;
 import pl.communityforcoders.nancy.module.annotation.OnEnable;
 import pl.communityforcoders.nancy.util.EmbedUtils;
 
-@ModuleManifest(name = "RegisterModule", author = "kacperduras", version = "1.0.0.1")
+@ModuleManifest(name = "RegisterModule", author = "kacperduras", version = "1.0.1.0")
 public class RegisterModule {
 
   @Inject
