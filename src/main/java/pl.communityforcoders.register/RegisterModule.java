@@ -22,15 +22,12 @@ import pl.communityforcoders.nancy.util.EmbedUtils;
 @ModuleManifest(name = "RegisterModule", author = "kacperduras", version = "1.0.1.0")
 public class RegisterModule {
 
-  @Inject
-  private Nancy nancy;
-
   private Guild guild;
 
   private RegisterThread thread;
 
   @OnEnable
-  public void onEnable() {
+  public void onEnable(Nancy nancy) {
     guild = nancy.getJDA().getGuildById("396018831434186762");
     thread = new RegisterThread(nancy, guild);
 
@@ -56,50 +53,21 @@ public class RegisterModule {
           .append(":thought_balloon:           Wszystkie ważne ogłoszenia znajdziesz na **#announcements**.\n")
           .append("\n")
           .append("Nasza strona, bot - wszystko jest *open source*. I to **TY** możesz przyczynić się do jego ewolucji, a nawet nie tylko.\n").queue();
-      channel.sendMessage("Skoro się tutaj znalazłeś, została Ci tylko część weryfikacyjna. Tutaj możesz podać swoją płeć, poprzez wpisanie komendy `!reg <male/female/unspecified>`.").queue();
+      channel.sendMessage("Skoro się tutaj znalazłeś, została Ci tylko część weryfikacyjna. Zaakceptuj regulamin, pisząc komendę `!akceptuj`.").queue();
     });
   }
 
-  @CommandManifest(name = "!reg", type = ChannelType.PRIVATE)
+  @CommandManifest(name = "!akceptuj", type = ChannelType.PRIVATE)
   public void registerCommand(User user, PrivateChannel channel, CommandContext context) {
-    if (context.getParams().size() != 1) {
-      channel.sendMessage(EmbedUtils.error(new Field("Poprawne użycie", "!reg <male/female/unspecified>", true))).queue();
-      return;
-    }
-
     Member member = guild.getMember(user);
 
-    if (context.hasParam("male")) {
-      register(channel, member, "male");
-    } else if (context.hasParam("female")) {
-      register(channel, member, "female");
-    } else if (context.hasParam("unspecified")) {
-      register(channel, member, "unspecified");
-    } else {
-      channel.sendMessage(EmbedUtils.error(new Field("Poprawne użycie", "!reg <male/female/unspecified>", true))).queue();
-    }
-  }
-
-  private void register(PrivateChannel channel, Member member, String role) {
-    List<Role> user = guild.getRolesByName("user", true);
-    if (user.size() == 0) {
+    List<Role> role = guild.getRolesByName("user", true);
+    if (role.size() == 0) {
       channel.sendMessage(EmbedUtils.error(new Field("Błąd wewnętrzny", "Skontaktuj się z administracją serwera.", true))).queue();
       return;
     }
 
-    if (member.getRoles().contains(user.get(0))) {
-      channel.sendMessage(EmbedUtils.error(new Field("Błąd", "Twoje konto jest już zarejestrowane.", true))).queue();
-      return;
-    }
-
-    List<Role> sex = guild.getRolesByName(role, true);
-    if (sex.size() == 0) {
-      channel.sendMessage(EmbedUtils.error(new Field("Błąd wewnętrzny", "Skontaktuj się z administracją serwera.", true))).queue();
-      return;
-    }
-
-    guild.getController().addRolesToMember(member, user.get(0), sex.get(0)).queue();
-
+    guild.getController().addRolesToMember(member, role.get(0)).queue();
     channel.sendMessage(EmbedUtils.agree(new Field("Gratulacje :)", "Twoje konto zostało zarejestrowane pomyślnie! Życzymy miłego korzystania ze serwera.", true))).queue();
   }
 

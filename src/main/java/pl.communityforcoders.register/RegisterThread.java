@@ -61,7 +61,7 @@ public class RegisterThread extends Thread {
           member.getUser().openPrivateChannel().queue(channel ->
               channel.sendMessage(EmbedUtils.warning("Hej!", new Field(
                     "Wygląda na to, że nie zarejestrowałeś się na serwerze Community for Coders!",
-                    "Dokonaj tego teraz, za pośrednictwem komendy !reg <male/female/unknown>",
+                    "Dokonaj tego teraz, akceptując regulamin komendą `!akceptuj`.",
                     true
               ))).queue());
         }
