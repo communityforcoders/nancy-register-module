@@ -60,13 +60,19 @@ public class RegisterModule {
   public void registerCommand(User user, PrivateChannel channel, CommandContext context) {
     Member member = guild.getMember(user);
 
-    List<Role> role = guild.getRolesByName("user", true);
-    if (role.size() == 0) {
+    List<Role> roles = guild.getRolesByName("user", true);
+    if (roles.size() == 0) {
       channel.sendMessage(EmbedUtils.error(new Field("Błąd wewnętrzny", "Skontaktuj się z administracją serwera.", true))).queue();
       return;
     }
 
-    guild.getController().addRolesToMember(member, role.get(0)).queue();
+    List<Role> memberRoles = member.getRoles();
+    if (memberRoles.stream().map(Role::getName).anyMatch(role -> role.equals("user"))) {
+      channel.sendMessage(EmbedUtils.error(new Field("Błąd", "Twoje konto jest już zarejestrowane.", true))).queue();
+      return;
+    }
+
+    guild.getController().addRolesToMember(member, roles.get(0)).queue();
     channel.sendMessage(EmbedUtils.agree(new Field("Gratulacje :)", "Twoje konto zostało zarejestrowane pomyślnie! Życzymy miłego korzystania ze serwera.", true))).queue();
   }
 
