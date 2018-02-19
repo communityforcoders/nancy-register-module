@@ -29,9 +29,8 @@ public class RegisterModule {
   @OnEnable
   public void onEnable(Nancy nancy) {
     guild = nancy.getJDA().getGuildById("396018831434186762");
-    thread = new RegisterThread(nancy, guild);
 
-    nancy.getCommandManager().register(this);
+    thread = new RegisterThread(nancy, guild);
     thread.start();
   }
 
