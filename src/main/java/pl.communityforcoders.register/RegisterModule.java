@@ -67,7 +67,7 @@ public class RegisterModule {
     }
 
     List<Role> memberRoles = member.getRoles();
-    if (memberRoles.stream().map(Role::getName).anyMatch(role -> role.equals("user"))) {
+    if (memberRoles.stream().map(Role::getName).anyMatch(role -> role.equalsIgnoreCase("user"))) {
       channel.sendMessage(EmbedUtils.error(new Field("Błąd", "Twoje konto jest już zarejestrowane.", true))).queue();
       return;
     }
